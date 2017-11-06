@@ -1,0 +1,187 @@
+//1. Long parameter list
+public function setColors($color1, $color2, $color3, $color4, $color5, $color6, $color7, $color8)
+{
+	//do something
+	echo $color1;
+	echo $color2;
+	echo $color3;
+	echo $color4;
+	echo $color5;
+	echo $color6;
+	echo $color7;
+	echo $color8;
+}
+
+//refactor 
+public function setColors($data)
+{
+	//do something
+	echo $data['color1'];
+	echo $data['color2'];
+	echo $data['color3'];
+	echo $data['color4'];
+	echo $data['color5'];
+	echo $data['color6'];
+	echo $data['color7'];
+	echo $data['color8'];
+}
+
+//2. Unrelated name
+
+public function showListPost($id)
+{
+	$testData = $post->listPost();
+}
+
+//refactor 
+public function showListPost($id)
+{
+  $listPosts = $post->listPost();
+}
+
+//3. Add unneeded context
+class Car
+{
+	public $carMake;
+	public $carModel;
+	public $carColor;
+
+	//do something
+}
+
+//refactor
+class Car
+{
+	public $make;
+	public $model;
+	public $color;
+
+	//do something
+}
+
+//4. Un encapsulate conditionals
+if ($post->state === 'published') 
+{
+	//do something
+}
+
+//refactor
+if ($post->isPublished()) 
+{
+	//do something
+}
+
+//5. Long method, function
+public function showUser()
+{
+	showAvatar();
+
+	echo("last name"  $l_name);
+	echo("first name"  $f_name);
+	echo("phone"  $phone);
+	echo("address"  $address);
+}
+
+//refactor
+public function showUser()
+{
+	showAvatar();
+	showInformations();
+}
+public function showInformations()
+{
+	echo("last name"  $l_name);
+	echo("first name"  $f_name);
+	echo("phone"  $phone);
+	echo("address"  $address);
+}
+
+//6. Duplicate code
+public void bar()
+{
+	foo("A");
+	foo("B");
+	foo("C");
+}
+
+//refactor
+public void bar()
+{
+	String [] elements = {"A", "B", "C"};
+
+	for(String element : elements){
+		foo(element);	
+	}
+}
+
+//7. Do many things
+public bool isEdible()
+{
+	if(this.ExpirationDate >  Date.Now &&
+		this.ApprovedForConsumption == true &&
+		this.InspectiorId != null) {
+		return true;	
+	} else {
+		return false;	
+	}
+}
+
+//refactor
+public bool isEdible()
+{
+	return isFresh() &&
+		isApproved() &&
+		isInspected();
+}
+
+//8. Inline temp
+
+public function showName()
+{
+	$name = $user->getName();
+	if($name) {
+		//do something	
+	}
+}
+
+//refactor
+public function showName()
+{
+	if($user->getName()) {
+		do something	
+	}
+}
+
+// 9. Conditional complexity
+if (tree.leaf == '' || tree.leaf == NULL) {
+    return fasle;
+} else {
+    return true;
+}
+
+// refactor 
+if (empty(tree.leaf)) {
+    return fasle;
+} else {
+    return true;
+}
+
+// 10. Temp
+double basePrice = quantity * itemPrice;
+if(basePrice > 1000){
+	return basePrice * 0.95;
+} else {
+	return basePrice * 0.98;
+}
+
+//refactor
+if(getBasePrice() > 1000){
+	return getBasePrice() * 0.95;
+} else {
+	return getBasePrice() * 0.98;
+}
+
+double getBasePrice()
+{
+	return quantity * itemPrice;
+}
