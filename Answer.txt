@@ -1,0 +1,248 @@
+//Nguyễn Thanh Hải
+
+//1.Duplicate Code
+
+if (isSpecialDeal()) {
+  $total = $price * 0.95;
+  send();
+}
+else {
+  $total = $price * 0.98;
+  send();
+}
+
+//Solution
+
+if (isSpecialDeal())
+  $total = $price * 0.95;
+else
+  $total = $price * 0.98;
+send();
+
+//2.Long Parameter List
+
+public function showUser($name, $age, $address, $phone)
+{
+    echo $name;
+    echo $age;
+    echo $address;
+    echo $phone;
+}
+
+//refactor
+
+public function showUser($user)
+{
+    echo $user['name'];
+    echo $user['age'];
+    echo $user['address'];
+    echo $user['phone'];
+}
+
+//3.Data Clumps
+
+$author = $book->getAuthor();
+$publisher = $book->getPublisher();
+$getBook = $books->find($author, $publisher);
+
+//refactor
+$getBook = $books->find($book);
+
+//tran van my
+
+//4.Uncommunicative name
+
+public function showListBook() {
+  $demo123 = $book->listBook();
+
+  return $demo123;
+}
+
+////refactor 
+public function showListBook($id) {
+  $listBooks = $book->listBook();
+
+  return $listBoooks;
+}
+
+//5.Comments
+ 
+convert to cents
+a = x * 100
+
+# avg cents per customer 
+avg = a / n
+
+////refactor
+
+total_cents = total * 100
+average_per_customer = total_cents / customer_count
+
+//6.Long parameter list
+public function changeStudents($student1, $student2, $student3, $student4, $student5, $student6, $student7) {
+  //do something
+    dd($student1);
+    dd($student2);
+    dd($student3);
+    dd($student4);
+    dd($student5);
+    dd($student6);
+    dd($student7);
+}
+
+////refactor 
+public function changeStudents($data) {
+  //do something
+    dd($data['student1']);
+    dd($data['student2']);
+    dd($data['student3']);
+    dd($data['student4']);
+    dd($data['student5']);
+    dd($data['student6']);
+    dd($data['student7']);
+}
+
+//7.Conditional complexity
+
+if (user.name == '' || user.name == NULL) {
+    return fasle;
+} else {
+    return true;
+}
+
+// refactor 
+if (empty(user.nam)) {
+    return fasle;
+} else {
+    return true;
+}
+
+//8. Lazy Class
+
+class Person
+{
+    public function getInfor()
+    {
+        //do something 
+        return infor;
+    }
+
+}
+
+class User
+{
+    public function getInfor()
+    {
+        //do something 
+        return infor;
+    }
+
+    public function totalPost()
+    {
+        //do something 
+        return total;
+    }
+}
+
+class Customer extends User
+{
+    // dosomething     
+}
+ 
+ //refactor
+class User
+ {
+    public function getInfor()
+    {
+        //do something 
+        return infor;
+    }
+
+    public function totalPost()
+    {
+        //do something 
+        return total;
+    }
+ }
+
+class Customer extends User
+{
+    // dosomething     
+}
+
+//9.Dead code
+createItem: function(){
+    if (!confirm('Do you want to create this service!')) return;
+    input.description = newItem.desctiption;
+    input.name = newItem.name;
+    input.avg_rate = newItem.avg_rate
+    input.total_rate = newItem.total_rate
+    var authOptions = {
+            method: 'POST',
+            url: '/api/v0/service',
+            params: input,
+            headers: {
+                'Authorization': "Bearer "  this.token.access_token,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            json: true
+        }
+
+    axios(authOptions).then((response) => {
+        this.newItem = {'id': '', 'name': '', 'short_description': '', 'description': '', 'price': '', 'avg_rate': '', 'total_rate': ''},
+        this.formErrors = '';
+        console.log(response);
+        $("#create-item").modal('hide');
+        this.changePage(this.pagination.current_page);
+    }).catch((error) => {
+        self.formErrors = error.response.data.message;
+        for (key in self.formErrors) {
+            toastr.error(self.formErrors[key], '', {timeOut: 10000});
+        }    
+    });
+},
+// refactor
+createItem: function(){
+    if (!confirm('Do you want to create this service!')) return;
+    var input = this.newItem;
+    var authOptions = {
+            method: 'POST',
+            url: '/api/v0/service',
+            params: input,
+            headers: {
+                'Authorization': "Bearer "  this.token.access_token,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            json: true
+        }
+
+    axios(authOptions).then((response) => {
+        this.newItem = {'id': '', 'name': '', 'short_description': '', 'description': '', 'price': '', 'avg_rate': '', 'total_rate': ''},
+        this.formErrors = '';
+        self.formErrors = response.data.message;
+        $("#create-item").modal('hide');
+        this.changePage(this.pagination.current_page);
+    }).catch((error) => {
+        self.formErrors = error.response.data.message;
+        for (key in self.formErrors) {
+            toastr.error(self.formErrors[key], '', {timeOut: 10000});
+        }    
+    });
+},
+//10.Inline Temp
+
+function createUser(Request $request)
+{
+    $user = $user->createUser($request->all());
+        if ($user) {
+            //do something
+        }
+ }
+ 
+ // Refactor :
+function createUser(Request $request)
+{
+    if ($user->createUser($request->all())) {
+        //do something
+    }
+ }
